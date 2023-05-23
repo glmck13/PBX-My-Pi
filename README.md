@@ -57,6 +57,14 @@ Dial Patterns
 ### Connectivity > Inbound Routes > Add Inbound Route
 + Description: InboundPSTN
 + Set destination: Extensions, 6100 (my extension)
+## Call announcement platform
++ /etc/asterisk/extensions_override_freepbx.conf on freepbx.home
++ Raspberry Pi, ksh, ncat, sox, aws creds, aws-polly.sh
++ ringtones.conf, ringtones.sh
++ crontab: @reboot $HOME/bin/ringtones.sh >/tmp/ringtones.log 2>&1 &
+## linphone
++ linphone
++ register sip:6100@freepbx.home
 ## References
 I cobbled togther the above config from a variety of different sources on the web.  As it turned out, each of the sources turned out to have some inaccurate or missing info, so it took some trial and error before I got everything working. Here are a few of the links that turned out to be most directionally correct:
 1. [Convert Your Analog Phone Line To Digital With Grandstream HT813](https://vitalpbx.com/blog/convert-your-analog-phone-line-to-digital/)
