@@ -1,4 +1,3 @@
 # HomePBX
-Setup FreePBX on Raspberry Pi using Grandstream HT813 ATA as PSTN gateway
-
+Configure home PSTN gateway with Grandstream ATA and FreePBX
 <img src=https://github.com/glmck13/HomePBX/blob/main/drawing.png>  
