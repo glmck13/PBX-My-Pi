@@ -2,7 +2,7 @@
 Configure home PSTN gateway with Grandstream ATA and FreePBX
 <img src=https://github.com/glmck13/HomePBX/blob/main/drawing.png width=600px>  
 ## Background
-For the past several years I’ve been running Asterisk on a Raspberry Pi 3B equipped with an FXO board from [SwitchPi](https://switchpi.com/).  The system would listen to incoming calls, and then speak the incoming caller ID aloud with the aid of [Polly, the text-to-speech service in AWS](https://aws.amazon.com/polly/).  Problem is, the drivers for the SwitchPi board were compiled for a specific version of Raspbian, which made it impossible to upgrade the OS or Asterisk.  So I figured it was a time for a change! I little Googling landed me on the [HT813 ATA from Grandstream](https://www.grandstream.com/hubfs/Product_Documentation/HT813_User_Guide.pdf), so I set out to build a more robust PSTN gateway for my house by marrying that with the latest version of [FreePBX & Asterisk from Sangoma](https://www.freepbx.org/).
+For the past several years I’ve been running Asterisk on a Raspberry Pi 3B equipped with an FXO board from [SwitchPi](https://switchpi.com/).  The system would listen to incoming calls, and then speak the incoming caller ID aloud with the aid of [Polly, the text-to-speech service in AWS](https://aws.amazon.com/polly/).  Problem is, the drivers for the SwitchPi board were compiled for a specific version of Raspbian, which made it impossible to upgrade either the OS or Asterisk.  So I figured it was a time for a change! I little Googling landed me on the [HT813 ATA from Grandstream](https://www.grandstream.com/hubfs/Product_Documentation/HT813_User_Guide.pdf), so I set out to build a more robust PSTN gateway for my house by marrying that with the latest version of [FreePBX & Asterisk from Sangoma](https://www.freepbx.org/).
 ## FreePBX build instructions
 I started with an old Raspberry Pi 3B I had lying around, and installed the latest version of [Raspberry Pi OS using the imager tool](https://www.raspberrypi.com/software/). I then assigned a fixed IPv4 address to my Pi (this is done via the dhcpcd menu!) and plugged it into one of the available Ethernet ports on my home router.  I named the system “freepbx.home”.  Next I installed the latest releases of FreePBX and Asterisk following [RonR’s script posted on DSLReports](https://www.dslreports.com/forum/r30661088-PBX-FreePBX-for-the-Raspberry-Pi).  The process required a sequence of reboots of the Raspberry Pi, but it executed flawlessly!
 ## Grandstream config
@@ -58,11 +58,7 @@ Dial Patterns
 + Description: **InboundPSTN**
 + Set destination: **Extensions**, **6100** (*my extension*)
 ## Call announcements
-+ /etc/asterisk/extensions_override_freepbx.conf on freepbx.home
-+ Raspberry Pi with external speaker
-+ ksh, ncat, sox, aws creds, aws-polly.sh
-+ ringtones.conf, ringtones.sh
-+ crontab: @reboot $HOME/bin/ringtones.sh >/tmp/ringtones.log 2>&1 &
+My FreePBX Pi is colocated with my router down in the basement, so it's not optimal for sending out incoming call announcements.  As a result I set up another Pi equipped with a small speaker.  I named it "pimate".  This 2nd Pi connects to the house LAN via Wifi, so I can place it anywhere.  I make use of Asterisk's FastCGI interface to send a message from the freepbx to pimate.  I inserted the call inside the ??? context, and placed this inside /etc/asterisk/extensions_override_freepbx.conf so it would be inserted into my Asterisk dialplan.  I use ncat on pimate (the NMAP version) to listen for the TCP message, after which I extract the callerid.  I then make a call to Polly to generate the desired text-to-speech, then play it with the sox utility.  The attached ringtones.sh script does what you need.  I launch it at reboot from my user crontab: @reboot $HOME/bin/ringtones.sh >/tmp/ringtones.log 2>&1 &
 ## VoIP client
 + linphone (Linux or Windows)
 + register sip:6100@freepbx.home
