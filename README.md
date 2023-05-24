@@ -11,52 +11,52 @@ Next step was to configure the Grandstream.  I plugged the WAN port of the ATA i
 + Unconditional Call Forward to VOIP: User ID: PSTN, Sip Server: freepbx.home, Sip Destination Port: 5060
 ### FXS PORT
 + Primary SIP Server: **freepbx.home**
-+ SIP User ID: **6200** (this is the Asterisk extension # for the FXS port)
++ SIP User ID: **6200** (*this is the Asterisk extension # for the FXS port*)
 + Authenticate ID: **6200**
-+ Authenticate Password: *enter a numeric password; must be same on FreePBX end*
++ Authenticate Password: (*enter a numeric password; must be same on FreePBX end*)
 + SIP Registration: **Yes**
 + Outgoing call without Registration: **Yes**
 ### FXO PORT
 + Primary SIP Server: **freepbx.home**
-+ SIP User ID: **PSTN** (this is the Asterisk trunk name)
++ SIP User ID: **PSTN** (*this is the Asterisk trunk name*)
 + Authenticate ID: **PSTN**
-+ Authenticate Password: *enter a numeric password; must be same on FreePBX end*
++ Authenticate Password: (*enter a numeric password; must be same on FreePBX end*)
 + SIP Registration: **Yes**
 + Outgoing call without Registration: **Yes**
-+ Number of Rings: **2** (set as low as possible, but must allow sufficient time for caller ID to be passed in over PSTN line)
-+ PSTN Ring Thru FXS: **No** (this allows the FXS & FXO ports to operate independently)
++ Number of Rings: **2** (*set as low as possible, but must allow sufficient time for caller ID to be passed in over PSTN line*)
++ PSTN Ring Thru FXS: **No** (*this allows the FXS & FXO ports to operate independently*)
 + Stage Method (1/2): **1**
 ## FreePBX Config
 Here’s how I created the “PSTN” trunk”:
 ### Connectivity > Trunks > Add Trunk
 General
 + Trunk Name: **PSTN**
-+ Oubound CallerrID: *PSTN phone #*
++ Oubound CallerrID: (*PSTN phone #*)
 + CID Options: **Force trunk CID**
-+ Asterisk Trunk Dial Options: *left this alone; my system had this set to ‘R’*
++ Asterisk Trunk Dial Options: (*left this alone; my system had this set to ‘R’*)
    
 pjsip Settings, General
-+ Username: *left this alone; my system has this set to trunk name, i.e. “**PSTN**”*
-+ Auth username: *ditto*
++ Username: (*left this alone; my system has this set to trunk name*)
++ Auth username: (*ditto*)
 + Authentication: **Both**
-+ Secret: *same as setting on HT813*
-+ Registration: **Receive** (these two settings are necessary so the Grandstream FXO and FXS port registration activities don’t interfere with each other)
++ Secret: (*same as setting on HT813*)
++ Registration: **Receive** (*these two settings are necessary so the Grandstream FXO and FXS port registration activities don’t interfere with each other*)
 + Context: **from-trunk-pjsip-PSTN**
 ### Connectivity > Outbound Routes > Add Outbound Route
 Route Settings
-Route Name: **OutboundPSTN**
-Route CID: *PSTN phone #*
-Override extension: **Yes**
-Trunk Sequence for Matched Routes: **PSTN**
++ Route Name: **OutboundPSTN**
++ Route CID: (*PSTN phone #*)
++ Override extension: **Yes**
++ Trunk Sequence for Matched Routes: **PSTN**
    
 Dial Patterns
 + prepend: blank
-+ prefix: **9** *i.e. dial ‘9’ for an outside call*
-+ match pattern: **XXXXXXXXXX** *10 digit calling*
++ prefix: **9** (*i.e. dial ‘9’ for an outside call*)
++ match pattern: **XXXXXXXXXX** (*10 digit calling*)
 
 ### Connectivity > Inbound Routes > Add Inbound Route
 + Description: **InboundPSTN**
-+ Set destination: **Extensions**, **6100** *my extension*
++ Set destination: **Extensions**, **6100** (*my extension*)
 ## Call announcements
 + /etc/asterisk/extensions_override_freepbx.conf on freepbx.home
 + Raspberry Pi with external speaker
