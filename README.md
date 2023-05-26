@@ -27,7 +27,7 @@ Next step was to configure the Grandstream.  I plugged the WAN port of the ATA i
 + PSTN Ring Thru FXS: **No** (*this allows the FXS & FXO ports to operate independently*)
 + Stage Method (1/2): **1**
 ## FreePBX Config
-Here’s how I created the “PSTN” trunk”:
+Here’s how I created the “PSTN” trunk:
 ### Connectivity > Trunks > Add Trunk
 General
 + Trunk Name: **PSTN**
