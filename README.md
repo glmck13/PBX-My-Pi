@@ -38,9 +38,9 @@ General
 pjsip Settings, General
 + Username: (*left this alone; my system has this set to trunk name*)
 + Auth username: (*ditto*)
-+ Authentication: **Both**
 + Secret: (*same as setting on HT813*)
-+ Registration: **Receive** (*these two settings are necessary so the Grandstream FXO and FXS port registration activities don’t interfere with each other*)
++ Authentication: **Both**
++ Registration: **Receive** (*these last two settings are necessary so the Grandstream FXO and FXS port registration activities don’t interfere with each other*)
 + Context: **from-trunk-pjsip-PSTN**
 ### Connectivity > Outbound Routes > Add Outbound Route
 Route Settings
@@ -60,8 +60,7 @@ Dial Patterns
 ## Call announcements
 My FreePBX Pi is colocated with my router down in the basement, so it's not optimal for sending out incoming call announcements.  As a result I set up another Pi equipped with a small speaker named "pimate".  This 2nd Pi connects to the house LAN via Wifi, so I can place it anywhere.  I make use of Asterisk's FastCGI interface to send a message from the freepbx to pimate.  I inserted the call inside the macro-dialout-one-predial-hook context, and placed this inside /etc/asterisk/extensions_override_freepbx.conf so it would be inserted into my Asterisk dialplan.  I use ncat on pimate (the NMAP version) to listen for the FastCGI TCP message, after which I extract the callerid.  I then make a call to Polly to generate the desired text-to-speech, then play it with the sox utility.  The attached ringtones.sh script does what you need.  I launch it at reboot from my user crontab: @reboot $HOME/bin/ringtones.sh >/tmp/ringtones.log 2>&1 &
 ## VoIP client
-+ linphone (Linux or Windows)
-+ register sip:6100@freepbx.home
+I installed [linphone](https://www.linphone.org/) on both my Linux and Windows desktops, and registered with extension sip:6100@freepbx.home on my freepbx.  Incoming calls ring on both my house phone and the linphone clients.  The sound quality is excellent!  To initiate an outbound call from my computer, I just prefix the 10-digit number with a '9'(since this is how I configured the dial patters in the PBX).
 ## References
 I cobbled togther the above config from a variety of different sources on the web.  As it turned out, each of the sources turned out to have some inaccurate or missing info, so it took some trial and error before I got everything working. Here are a few of the links that turned out to be most directionally correct:
 1. [Convert Your Analog Phone Line To Digital With Grandstream HT813](https://vitalpbx.com/blog/convert-your-analog-phone-line-to-digital/)
