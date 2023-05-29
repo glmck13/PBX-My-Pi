@@ -33,6 +33,7 @@ General
 + Trunk Name: **PSTN**
 + Oubound CallerrID: (*PSTN phone #*)
 + CID Options: **Force trunk CID**
++ Maximum Channels: **1**
 + Asterisk Trunk Dial Options: (*left this alone; my system had this set to ‘R’*)
    
 pjsip Settings, General
