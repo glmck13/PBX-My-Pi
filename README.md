@@ -27,7 +27,10 @@ Next step was to configure the Grandstream.  I plugged the WAN port of the ATA i
 + PSTN Ring Thru FXS: **No** (*this allows the FXS & FXO ports to operate independently*)
 + Stage Method (1/2): **1**
 ## FreePBX Config
-Here’s how I created the “PSTN” trunk:
+### Settings > Asterisk SIP Settings > General Settings
+NAT Settings
++ Local Networks: **192.168.1.0/24**
+  
 ### Connectivity > Trunks > Add Trunk
 General
 + Trunk Name: **PSTN**
@@ -43,6 +46,9 @@ pjsip Settings, General
 + Authentication: **Both**
 + Registration: **Receive** (*these last two settings are necessary so the Grandstream FXO and FXS port registration activities don’t interfere with each other*)
 + Context: **from-trunk-pjsip-PSTN**
+  
+pjsip Settings, Advanced
++ Match Inbound Authentication: **Auth Username**
 ### Connectivity > Outbound Routes > Add Outbound Route
 Route Settings
 + Route Name: **OutboundPSTN**
