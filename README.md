@@ -37,7 +37,7 @@ General
 + Oubound CallerrID: (*PSTN phone #*)
 + CID Options: **Force trunk CID**
 + Maximum Channels: **1**
-+ Asterisk Trunk Dial Options: (*left this alone; my system had this set to ‘R’*)
++ Asterisk Trunk Dial Options: (*left this alone; my system has this set to ‘R’ so ringing is provided early on outgoing calls*)
    
 pjsip Settings, General
 + Username: (*left this alone; my system has this set to trunk name*)
@@ -48,7 +48,8 @@ pjsip Settings, General
 + Context: **from-trunk-pjsip-PSTN**
   
 pjsip Settings, Advanced
-+ Match Inbound Authentication: **Auth Username**
++ Match Inbound Authentication: **Auth Username** (needed so that inbound calls authorize properly, even though the Grandstream has registered the PSTN trunk)  
+
 ### Connectivity > Outbound Routes > Add Outbound Route
 Route Settings
 + Route Name: **OutboundPSTN**
