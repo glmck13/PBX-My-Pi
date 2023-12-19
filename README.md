@@ -29,6 +29,7 @@ Next step was to configure the Grandstream.  I plugged the WAN port of the ATA i
 ## FreePBX Config
 ### Settings > Asterisk SIP Settings > General Settings
 NAT Settings
++ External Address: Click on **Detect Network Settings** (needed so RTP works thru NAT)
 + Local Networks: **192.168.1.0/24**
   
 ### Connectivity > Trunks > Add Trunk
