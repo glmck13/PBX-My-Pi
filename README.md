@@ -36,6 +36,14 @@ NAT Settings
 + Asterisk Dial Options: **Tt** (*enables call transfer capabilities*)
 + Disallow transfer features for inbound callers: **No**
 
+### Settings > Admin > Feature Codes
+Core
++ In-Call Asterisk Attended Transfer: **Enabled**
++ In-Call Asterisk Attended Transfer Aborting: **Enabled**
++ In-Call Asterisk Attended Transfer Completing: **Enabled**
++ In-Call Asterisk Attended Transfer Completing as a three-way bridge: **Enabled**
++ In-Call Asterisk Attended Transfer Swapping between the transferee and destination: **Enabled**
+
 ### Connectivity > Trunks > Add Trunk
 General
 + Trunk Name: **PSTN**
